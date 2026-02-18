@@ -13,4 +13,18 @@ class TaskController extends Controller
 
         return view('welcome', compact('tasks'));
     }
+
+    public function store(Request $request)
+    {
+        $validated = $request->validate([
+            'title' => 'required|max:255',
+        ]);
+
+        Task::create([
+            'title' => $validated['title'],
+            'is_completed' => false,
+        ]);
+
+        return redirect()->back()->with('success', 'Task created successfully.');
+    }
 }
