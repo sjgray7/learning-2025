@@ -5,10 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Список завдань</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 </head>
 <body class="bg-gray-100 flex items-center justify-center min-h-screen">
 
     <div class="w-full max-w-md bg-white rounded-xl shadow-lg overflow-hidden">
+
+        @if (session('success'))
+            <x-flash />
+        @endif
 
         <div>
             <form action="{{ route('tasks.store') }}" method="POST" class="p-4 border-b border-gray-200 bg-gray-50">

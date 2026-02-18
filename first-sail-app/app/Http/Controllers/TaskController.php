@@ -25,7 +25,7 @@ class TaskController extends Controller
             'is_completed' => false,
         ]);
 
-        return redirect()->back()->with('success', 'Task created successfully.');
+        return redirect()->back()->with('success', 'Завдання успішно додано!.');
     }
 
     // Оновлення статусу (виконано / не виконано)
@@ -44,6 +44,6 @@ class TaskController extends Controller
     {
         $task->delete();
 
-        return redirect()->back();
+        return redirect()->back()->with('success', 'Завдання видалено.');
     }
 }
