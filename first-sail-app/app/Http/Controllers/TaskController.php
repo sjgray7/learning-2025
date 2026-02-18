@@ -27,4 +27,23 @@ class TaskController extends Controller
 
         return redirect()->back()->with('success', 'Task created successfully.');
     }
+
+    // Оновлення статусу (виконано / не виконано)
+    public function update(Task $task)
+    {
+        // Ми просто перемикаємо статус на протилежний
+        $task->update([
+            'is_completed' => !$task->is_completed,
+        ]);
+
+        return redirect()->back();
+    }
+
+    // Видалення завдання
+    public function destroy(Task $task)
+    {
+        $task->delete();
+
+        return redirect()->back();
+    }
 }

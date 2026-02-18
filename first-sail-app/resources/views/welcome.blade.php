@@ -42,13 +42,34 @@
 
         <ul class="divide-y divide-gray-200">
             @foreach ($tasks as $task)
-                <li class="p-4 hover:bg-gray-50 flex items-center justify-between">
-                    <span class="text-gray-800">{{ $task->title }}</span>
-                    @if($task->is_completed)
-                        <span class="text-xs font-semibold text-green-600 bg-green-100 px-2 py-1 rounded-full">Готово</span>
-                    @else
-                        <span class="text-xs font-semibold text-yellow-600 bg-yellow-100 px-2 py-1 rounded-full">В процесі</span>
-                    @endif
+                <li class="p-4 hover:bg-gray-50 flex items-center justify-between transition group">
+
+                    <div class="flex items-center gap-3">
+                        <form action="{{ route('tasks.update', $task) }}" method="POST">
+                            @csrf
+                            @method('PATCH')
+                            <button type="submit" class="w-6 h-6 rounded-full border-2 flex items-center justify-center transition
+                                {{ $task->is_completed ? 'bg-green-500 border-green-500' : 'border-gray-300 hover:border-blue-500' }}">
+
+                                @if($task->is_completed)
+                                    <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                @endif
+                            </button>
+                        </form>
+
+                        <span class="{{ $task->is_completed ? 'line-through text-gray-400' : 'text-gray-800' }}">
+                            {{ $task->title }}
+                        </span>
+                    </div>
+
+                    <form action="{{ route('tasks.destroy', $task) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="text-gray-400 hover:text-red-500 transition opacity-0 group-hover:opacity-100 p-2">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        </button>
+                    </form>
+
                 </li>
             @endforeach
         </ul>
